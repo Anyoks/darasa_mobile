@@ -1,0 +1,25 @@
+<ion-view view-title="Profile">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content view-title="Profile">
+    <div class="list card">
+      <div class="item item-icon-left">
+        <i class="icon ion-person"></i>
+        <span ng-bind="firstName"></span> <span ng-bind="lastName"></span>
+      </div>
+      <div class="item item-icon-left">
+        <i class="icon ion-email"></i>
+        <span ng-bind="email"></span>
+      </div>
+      <div class="item item-icon-left" ng-click="submitFeedback()" href="">
+        <i class="icon ion-chatboxes"></i>
+        Send feedback
+      </div>
+      <div class="item item-icon-left" ng-click="logout()" href="">
+        <i class="icon ion-log-out"></i>
+        Logout
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

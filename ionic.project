@@ -1,0 +1,10 @@
+{
+  "name": "darasa",
+  "app_id": "a4298b98",
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://darasa.co.ke/api/v1"
+    }
+  ]
+}

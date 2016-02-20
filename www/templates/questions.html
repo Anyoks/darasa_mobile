@@ -1,0 +1,34 @@
+<ion-view view-title="Questions">
+  <ion-content view-title="Questions">
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
+    <ion-list ng-show="questions" ng-cloak>
+      <ion-item class="item-divider text-center item-text-wrap">
+          <h2 class="padding" ng-bind="topicName"></h2>
+          <button
+            ng-hide="ownsTopic"
+            class="button button-small button-outline button-balanced icon-left ion-cash"
+            ng-click="openModal()"
+            ng-cloak>
+            <b>Purchase answers in this topic</b>
+          </button>
+          <h3 ng-show="ownsTopic" class="balanced">You own this topic</h3>
+      </ion-item>
+      <ion-item ng-repeat="question in questions">
+        <span class="item-text-wrap" ng-bind-html="question.text | unsafe"></span>
+        <div class="text-center">
+          <button
+            class="button buton-small button-clear button-energized"
+            ng-click="answer(question.id, question.text)">
+            View answer
+          </button>
+        </div>
+      </ion-item>
+    </ion-list>
+    <div class="padding text-center" ng-hide="questions" ng-cloak>
+      <h3><span class="icon ion-refresh"></span> Pull to refresh</h3>
+    </div>
+  </ion-content>
+</ion-view>

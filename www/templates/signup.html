@@ -1,0 +1,33 @@
+<ion-view view-title="Signup">
+  <ion-header-bar class="bar-energized">
+    <h1 class="title">Sign in</h1>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list list-inset">
+      <form name="signupForm" ng-submit="signup(newUser)">
+        <label class="item item-input">
+          <input type="text" placeholder="First name" name="firstName" ng-model="newUser.firstName" required>
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Last Name" name="lastName" ng-model="newUser.lastName" required>
+        </label>
+        <label class="item item-input">
+          <input type="email" placeholder="Email" name="email" ng-model="newUser.email" required>
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Phone number" name="phoneNumber" ng-model="newUser.phoneNumber" required>
+        </label>
+        <label class="item item-input">
+          <input type="password" placeholder="Password" name="password" ng-model="newUser.password" required>
+        </label>
+        <button class="button button-block button-energized" ng-disabled="signupForm.$invalid">
+          Sign up
+        </button>
+        <div class="text-center">
+          <a class="dark" ui-sref="login">I already have an account</a><br><br>
+          <p>By signing up you are agreeing to our <span class="positive" ng-click="openModal()">Terms And Conditions</span></p>
+        </div>
+      </form>
+    </div>
+  </ion-content>
+</ion-view>

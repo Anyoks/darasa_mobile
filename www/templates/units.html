@@ -1,0 +1,22 @@
+<ion-view view-title="Select a unit">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content view-title="Units">
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
+    <ion-list ng-show="units">
+      <ion-item
+        collection-repeat="unit in units"
+        href=""
+        on-tap="topics(unit.id, unit.text)">
+        <div ng-bind="unit.text"></div>
+      </ion-item>
+    </ion-list>
+    <div class="padding text-center" ng-hide="units" ng-cloak>
+      <h3><span class="icon ion-refresh"></span> Pull to refresh</h3>
+    </div>
+  </ion-content>
+</ion-view>

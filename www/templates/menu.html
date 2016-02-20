@@ -1,0 +1,26 @@
+<ion-side-menus enable-menu-with-back-views="true">
+  <ion-side-menu side="left">
+    <header class="bar bar-header bar-energized">
+      <h1 class="title"><span class="icon ion-person"></span> <span ng-bind="firstName"></span> <span ng-bind="lastName"></span></h1>
+    </header>
+    <ion-content class="has-header" ng-init="doSomething()">
+      <ion-item nav-clear menu-close ui-sref="app.units">
+          <span class="ion-home"></span> Home
+        </ion-item>
+     <ion-list>
+       <ion-item nav-clear menu-close ui-sref="app.my-topics">
+         <span class="ion-filing"></span> My Topics
+       </ion-item>
+       <ion-item nav-clear menu-close ui-sref="app.profile">
+         <span class = "ion-gear-a"></span> Profile
+       </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-energized">
+      <ion-nav-back-button class="button-icon ion-arrow-left-c"></ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+  </ion-side-menu-content>
+</ion-side-menus>

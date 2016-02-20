@@ -1,0 +1,25 @@
+<ion-view view-title="Topics">
+  <ion-content view-title="Topics">
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
+    <ion-list>
+        <ion-item class="item-divider text-center item-text-wrap">
+            <h1 class="padding" ng-bind="unitName"></h1>
+        </ion-item>
+        <div ng-show="topics">
+          <ion-item
+            collection-repeat="topic in topics"
+            href=""
+            on-tap="questions(topic.id, topic.text)">
+            <div ng-show="topic" ng-bind="topic.text"></div>
+          </ion-item>
+        </div>
+      <ion-item ng-show="error" ng-bind="error"></ion-item>
+    </ion-list>
+    <div class="padding text-center" ng-hide="topics || error" ng-cloak>
+      <h3><span class="icon ion-refresh"></span> Pull to refresh</h3>
+    </div>
+  </ion-content>
+</ion-view>
