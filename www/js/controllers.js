@@ -1,12 +1,96 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $rootScope, Analytics){
+.controller('AppCtrl', function($scope, $rootScope, $state, $cordovaEmailComposer, $localstorage, $ionicLoading, $ionicPopover, $cordovaSocialSharing, Analytics, Darasa){
   $scope.firstName = $rootScope.globals.user.firstName;
   $scope.lastName = $rootScope.globals.user.secondName;
   $scope.email = $rootScope.globals.user.email;
   $scope.userId = $rootScope.globals.user.userId;
   $scope.token = $rootScope.globals.user.token;
+  Darasa.GetOwnedTopics($scope.token).then(function(data){
+     $scope.ownedTopics = data.data.data.length;
+  })
+
+  $scope.picture = $rootScope.globals.user.picture || 'img/avatar.jpg';
   Analytics.  _setUserId($scope.token);
+
+  //popover control
+  $ionicPopover.fromTemplateUrl('my-popover.html', {
+    scope: $scope
+  }).then(function(popover) {
+    $scope.popover = popover;
+  });
+
+  $scope.openPopover = function($event) {
+      $scope.popover.show($event);
+    };
+    $scope.closePopover = function() {
+      $scope.popover.hide();
+    };
+    //Cleanup the popover when we're done with it!
+    $scope.$on('$destroy', function() {
+      $scope.popover.remove();
+    });
+    // Execute action on hide popover
+    $scope.$on('popover.hidden', function() {
+      // Execute action
+    });
+    // Execute action on remove popover
+    $scope.$on('popover.removed', function() {
+      // Execute action
+  });
+
+  $scope.shareOnWhatsapp = function(){
+    var message = 'Darasa ensures you will pass that exam. Check it out at';
+    var image = undefined;
+    var link = 'https://play.google.com/store/apps/details?id=ke.co.darasa.app&hl=en';
+
+    $cordovaSocialSharing
+        .shareViaWhatsApp(message, image, link)
+        .then(function(result) {
+          // Success!
+        }, function(err) {
+          // An error occurred. Show a message to the user
+          NotificationService.showAlert('<b>Oops</b>', 'You have to have the Whatsapp application installed for this feature.');
+        });
+  }
+
+  $scope.logout = function(){
+    $scope.popover.hide();
+    $localstorage.set('user', "");
+    $rootScope.globals.user = "";
+    this.user = "";
+    if(window.plugins !== undefined){
+      if($rootScope.globals.user.picture !== undefined){
+        window.plugins.googleplus.logout(function(){})
+      }
+    }
+    Analytics._trackEvent('Users', 'Log out', '');
+    $state.go('login');
+  }
+
+  $scope.submitFeedback = function(){
+    Analytics._trackEvent('Users', 'Submit feed back', 'Started');
+    $cordovaEmailComposer.isAvailable().then(function() {
+       // is available
+       $cordovaEmailComposer.addAlias('gmail', 'com.google.android.gm');
+     }, function () {
+       // not available
+     });
+
+      var email = {
+        app: 'gmail',
+        to: 'dennorina@gmail.com',
+        cc: 'emaganjo@gmail.com',
+        subject: 'User Feed Back',
+        body: 'Hi Team Darasa...',
+        isHtml: false
+      };
+
+     $cordovaEmailComposer.open(email).then(null, function () {
+       // user cancelled email
+       Analytics._trackEvent('Users', 'Submit feed back', 'Cancelled');
+     });
+  }
 })
 
 .controller('SignupCtrl', function($scope, User, $localstorage, $state, $rootScope, $ionicModal, Analytics) {
@@ -61,7 +145,19 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('LoginCtrl', function($scope, User, $state, $rootScope, $localstorage, Analytics){
+.controller('LoginCtrl', function($scope, User, $state, $rootScope, $localstorage, $ionicPopup, $ionicLoading, $localstorage, $ionicPopup, Analytics, NotificationService){
+  $scope.isAvailable = false;
+
+  if(window.plugins !== undefined){
+      window.plugins.googleplus.isAvailable(
+        function (available) {
+          if (available) {
+            $scope.isAvailable = true;
+          }
+        }
+    );
+  }
+
   Analytics._trackView('Login page');
   $scope.login = function(user){
     User.GetByEmail(user).then(function(data){
@@ -70,7 +166,8 @@ angular.module('starter.controllers', [])
         user.userId = data.data.user_id;
         user.firstName = data.data.first_name;
         user.secondName = data.data.second_name;
-        user.topics = data.data.topics;
+        user.email = data.data.email;
+        user.picture = undefined;
         $localstorage.setObject('user', user);
         $rootScope.globals.user = user;
         Analytics._trackEvent('Users', 'Log in', 'Login with email');
@@ -80,8 +177,73 @@ angular.module('starter.controllers', [])
   }
 
   $scope.loginInWithGoogle = function(){
-    // Analytics._trackEvent('Users', 'Log in', 'Login with Google');
-    console.log('hae');
+    var user = {};
+    var name = '';
+    var displayName = "";
+    // $ionicLoading.show({
+    //   template: 'Please wait...'
+    // });
+
+    window.plugins.googleplus.login(
+      {
+        'scopes': 'profile'
+      },
+      function(userData){
+        console.log(userData);
+      //   user.userId = userData.userId;
+      //   name = userData.displayName.split(" ");
+      //   user.firstName = name[0];
+      //   user.lastName = name[1];
+      //   user.email = userData.email;
+      //   user.picture = userData.imageUrl;
+
+        showPopup();
+        function showPopup(){
+          $scope.data = {};
+          var myPopup = $ionicPopup.show({
+            template: '<input type="text" ng-model="data.phoneNumber" placeholder="07XX XXX XXX">',
+            title: 'Enter phone number',
+            scope: $scope,
+            buttons: [
+              { text: 'Cancel' },
+              {
+                text: '<b>Continue</b>',
+                type: 'button-energized',
+                onTap: function(e) {
+                  if (!$scope.data.phoneNumber) {
+                    //don't allow the user to close unless he enters wifi password
+                    e.preventDefault();
+                  } else {
+                    return $scope.data.phoneNumber;
+                  }
+                }
+              }
+            ]
+          });
+          myPopup.then(function(res) {
+            console.log(res);
+            // if(res == undefined){
+            //     $ionicLoading.hide();
+            //     return;
+            // } else{
+            //   user.phoneNumber = res;
+            //   User.loginInWithGoogle(user).then(function(data){
+            //     // Analytics._trackEvent('Users', 'Log in', 'Login with Google');
+            //     user.token = data.data.auth_token;
+            //     user.userId = data.data.user_id;
+            //     $localstorage.setObject('user', user);
+            //     $ionicLoading.hide();
+            //     $state.go('app.units');
+            //   });
+            // }
+          });
+        }
+      },
+      function (msg) {
+        $ionicLoading.hide();
+        NotificationService.showPopup('Oops', msg);
+      }
+    );
   }
 })
 
@@ -141,6 +303,15 @@ angular.module('starter.controllers', [])
     Analytics._trackEvent('Topics', 'View topic questions - from my topics page', topicName);
     $state.go('app.questions', {topicId: topicId, topicName: topicName});
   }
+
+  $scope.doRefresh = function(){
+    Darasa.GetOwnedTopics($scope.token).then(function(data){
+       $scope.ownedTopics = data.data.data;
+    }).finally(function() {
+       // Stop the ion-refresher from spinning
+       $scope.$broadcast('scroll.refreshComplete');
+    });
+  }
 })
 
 .controller('QuestionsCtrl', function($scope, $state, Darasa, $stateParams, $scope, $ionicModal, NotificationService, $ionicPopup, Analytics){
@@ -168,14 +339,7 @@ angular.module('starter.controllers', [])
       Analytics._addTransactionItem(mpesaCode, $scope.topicName, "50", "Topics");
       if(data.error === undefined){
           Analytics._trackEvent('Topics', 'Complete purchase', $scope.topicName);
-          Darasa.GetOwnedTopics($scope.token).then(function(data){
-             data.data.data.forEach(function(ownedTopic){
-               if(ownedTopic.id === $stateParams.topicId){
-                 $scope.ownsTopic = true;
-                 return;
-               }
-             });
-          });
+          $scope.ownsTopic = true;
           $scope.modal.hide();
           NotificationService.showPopup('Success', data.data.msg);
       }
@@ -248,7 +412,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('AnswerCtrl', function($scope, $state, Darasa, $stateParams){
+.controller('AnswerCtrl', function($scope, $state, Darasa, $stateParams, Analytics){
   Analytics._trackView('Answers page');
   Darasa.GetAnswer($scope.token, $stateParams.questionId).then(function(data){
     $scope.question = $stateParams.questionText;
@@ -262,37 +426,5 @@ angular.module('starter.controllers', [])
        // Stop the ion-refresher from spinning
        $scope.$broadcast('scroll.refreshComplete');
     });
-  }
-})
-
-.controller('ProfileCtrl', function($scope, $state, $rootScope, $localstorage, $cordovaEmailComposer){
-  Analytics._trackView('Profile page');
-  $scope.logout = function(){
-    $localstorage.set('user', "");
-    $rootScope.globals.user = "";
-    Analytics._trackEvent('Users', 'Log out', '');
-    $state.go('login');
-  }
-
-  $scope.submitFeedback = function(){
-    Analytics._trackEvent('Users', 'Submit feed back', 'Started');
-    $cordovaEmailComposer.isAvailable().then(function() {
-       // is available
-     }, function () {
-       // not available
-     });
-
-      var email = {
-        to: 'dennorina@gmail.com',
-        cc: 'emaganjo@gmail.com',
-        subject: 'User Feed Back',
-        body: 'Hi Team Darasa...',
-        isHtml: false
-      };
-
-     $cordovaEmailComposer.open(email).then(null, function () {
-       // user cancelled email
-       Analytics._trackEvent('Users', 'Submit feed back', 'Cancelled');
-     });
   }
 });

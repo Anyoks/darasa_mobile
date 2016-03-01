@@ -3,10 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
     <title></title>
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+
+    <!-- weinre debugging -->
+    <script src="http://192.168.43.108:8080/target/target-script-min.js#anonymous"></script>
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -96,5 +100,33 @@
     </ion-content>
   </div>
 </script>
-  </body>
+
+
+<script id="my-popover.html" type="text/ng-template">
+  <ion-popover-view>
+    <ion-content>
+    <div class="list">
+      <div class="item item-avatar">
+        <img ng-src="{{picture}}">
+        <span ng-bind="firstName | capitalize"></span> <span ng-bind="lastName | capitalize"></span><br>
+        Units Owned : <span ng-bind="ownedTopics"> </span>
+      </div>
+      <div class="item item-icon-left" ng-click="shareOnWhatsapp()" href="">
+        <i class="icon ion-social-whatsapp"></i>
+        Share on Whatsapp
+      </div>
+      <div class="item item-icon-left" ng-click="submitFeedback()" href="">
+        <i class="icon ion-chatboxes"></i>
+        Send feedback
+      </div>
+      <div class="item item-icon-left" ng-click="logout()" href="">
+        <i class="icon ion-android-lock"></i>
+        Logout
+      </div>
+    </div>
+    </ion-content>
+  </ion-popover-view>
+</script>
+
+</body>
 </html>

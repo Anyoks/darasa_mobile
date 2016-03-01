@@ -11,6 +11,15 @@ angular.module('starter.services', [])
       });
   };
 
+  var loginInWithGoogle = function(user) {
+    return $http.post(ApiEndpoint.url + '/google_sign_up?=', { "user": {email: user.email, first_name: user.firstName, second_name: user.lastName, phone_number: user.phoneNumber, uid: user.userId} })
+      .then(function(data) {
+        return data;
+      }, function(error){
+        NotificationService.showPopup('Oops', error.data.error);
+      });
+  };
+
   var GetByToken = function(token) {
     return $http.get(ApiEndpoint.url +'/user_details.json?auth_token='+ token)
       .then(function(data) {
@@ -52,6 +61,7 @@ angular.module('starter.services', [])
 
   return {
     Create: Create,
+    loginInWithGoogle: loginInWithGoogle,
     GetByToken: GetByToken,
     GetByEmail: GetByEmail,
     KillSession: KillSession,
@@ -80,7 +90,7 @@ angular.module('starter.services', [])
   };
 
   var GetOwnedTopics = function(token) {
-    return $http.get(ApiEndpoint.url +'/my_topics.json?auth_token='+ token)
+    return $http.get(ApiEndpoint.url +'/my_topics.json?auth_token='+ token,  { cache: true})
       .then(function(data) {
           return data;
       }, function(error){
@@ -148,7 +158,7 @@ angular.module('starter.services', [])
         $timeout(function() {
           myPopup.close(); //close the popup after 3 seconds for some reason
         }, 4000);
-      }
+      },
     }
   })
 

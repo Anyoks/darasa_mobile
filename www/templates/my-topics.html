@@ -1,22 +1,26 @@
+
 <ion-view view-title="My topics">
   <ion-nav-buttons side="left">
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button button-icon icon ion-android-more-vertical" ng-click="openPopover($event)"></button>
   </ion-nav-buttons>
   <ion-content view-title="My topics">
     <ion-refresher
       pulling-text="Pull to refresh..."
       on-refresh="doRefresh()">
     </ion-refresher>
-    <div class="padding text-center" ng-hide="ownedTopics.length >= 1" ng-cloak>
-      <h3><span class="icon ion-refresh"></span> Pull to refresh</h3>
-    </div>
-    <ion-list ng-show="ownedTopics.length >= 1" ng-cloak>
-      <ion-item collection-repeat="ownedTopic in ownedTopics" href="" on-tap="questions(ownedTopic.id, ownedTopic.name)">
-        <div ng-bind="ownedTopic.name"></div>
-      </ion-item>
+    <ion-list>
+        <ion-item ng-repeat="ownedTopic in ownedTopics" href="" on-tap="questions(ownedTopic.id, ownedTopic.name)" ng-show="ownedTopics.length >= 1" ng-cloak>
+          <span ng-bind="ownedTopic.name"></span>
+        </ion-item>
+        <ion-item ng-hide="ownedTopics.length >= 1" ng-cloak>
+          You don't own any topics
+        </ion-item>
     </ion-list>
     <div class="padding text-center" ng-hide="ownedTopics.length >= 1" ng-cloak>
-      <p>You don't own any topics</p>
+      <h3><span class="icon ion-refresh"></span> Pull to refresh</h3>
     </div>
   </ion-content>
 </ion-view>
