@@ -185,9 +185,7 @@ angular.module('starter.controllers', [])
     // });
 
     window.plugins.googleplus.login(
-      {
-        'scopes': 'profile'
-      },
+      {},
       function(userData){
         console.log(userData);
       //   user.userId = userData.userId;

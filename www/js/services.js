@@ -90,7 +90,7 @@ angular.module('starter.services', [])
   };
 
   var GetOwnedTopics = function(token) {
-    return $http.get(ApiEndpoint.url +'/my_topics.json?auth_token='+ token,  { cache: true})
+    return $http.get(ApiEndpoint.url +'/my_topics.json?auth_token='+ token)
       .then(function(data) {
           return data;
       }, function(error){
