@@ -1,33 +1,83 @@
 <ion-view view-title="Signup">
-  <ion-header-bar class="bar-energized">
-    <h1 class="title">Sign up</h1>
-  </ion-header-bar>
-  <ion-content>
-    <div class="list list-inset">
-      <form name="signupForm" ng-submit="signup(newUser)">
-        <label class="item item-input">
-          <input type="text" placeholder="First name" name="firstName" ng-model="newUser.firstName" required>
-        </label>
-        <label class="item item-input">
-          <input type="text" placeholder="Last Name" name="lastName" ng-model="newUser.lastName" required>
-        </label>
-        <label class="item item-input">
-          <input type="email" placeholder="Email" name="email" ng-model="newUser.email" required>
-        </label>
-        <label class="item item-input">
-          <input type="text" placeholder="Phone number" name="phoneNumber" ng-model="newUser.phoneNumber" required>
-        </label>
-        <label class="item item-input">
-          <input type="password" placeholder="Password" name="password" ng-model="newUser.password" required>
-        </label>
-        <button class="button button-block button-energized" ng-disabled="signupForm.$invalid">
-          Sign up
-        </button>
-        <div class="text-center">
-          <a class="dark" ui-sref="login">I already have an account</a><br><br>
-          <p>By signing up you are agreeing to our <span class="positive" ng-click="openModal()">Terms And Conditions</span></p>
-        </div>
-      </form>
-    </div>
-  </ion-content>
+    <ion-header-bar class="bar-energized">
+        <h1 class="title">Sign up</h1>
+    </ion-header-bar>
+    <ion-content>
+        <ion-slide-box ng-init="lockSlide()" show-pager="false" active-slide="activeSlide"
+                       on-slide-changed="homeVm.slideIndex = $index">
+            <div class="list list-inset">
+                <form name="signupForm" ng-submit="signup(newUser)" novalidate>
+                    <ion-input class="item item-input input-item">
+                        <input type="text" placeholder="First name" name="firstName" ng-model="newUser.firstName" required>
+                    </ion-input>
+                    <div ng-if="signupForm.firstName.$pristine == false"
+                         ng-messages="signupForm.firstName.$error" role="alert" class="form-errors">
+                        <div class="form-error" ng-message="required">
+                            You need to enter your first name
+                        </div>
+                    </div>
+
+                    <ion-input class="item item-input input-item">
+                        <input type="text" placeholder="Last Name" name="lastName" ng-model="newUser.lastName" required>
+                    </ion-input>
+                    <div ng-if="signupForm.lastName.$pristine == false"
+                         ng-messages="signupForm.lastName.$error" role="alert" class="form-errors">
+                        <div class="form-error" ng-message="required">
+                            You need to enter your last name
+                        </div>
+                    </div>
+
+                    <ion-input class="item item-input input-item">
+                        <input type="email" placeholder="Email" name="email" ng-model="newUser.email" required>
+                    </ion-input>
+                    <div ng-if="signupForm.email.$pristine == false"
+                         ng-messages="signupForm.email.$error" role="alert" class="form-errors">
+                        <div class="form-error" ng-message="required">
+                            You need to enter your email address
+                        </div>
+
+                        <div class="form-error" ng-message="email">Your email address is invalid</div>
+                    </div>
+
+                    <ion-input class="item item-input input-item">
+                        <input type="tel" placeholder="Phone number" name="phoneNumber" ng-model="newUser.phoneNumber" required>
+                    </ion-input>
+                    <div ng-if="signupForm.phoneNumber.$pristine == false"
+                         ng-messages="signupForm.phoneNumber.$error" role="alert" class="form-errors">
+                        <div class="form-error" ng-message="required">
+                            You need to enter your phone number
+                        </div>
+
+                        <div class="form-error" ng-message="tel">Your phone number is invalid</div>
+                    </div>
+
+                    <ion-input class="item item-input input-item">
+                        <input type="password" placeholder="Password" name="password" ng-model="newUser.password" required ng-minlength="8">
+                    </ion-input>
+                    <div ng-if="signupForm.password.$pristine == false"
+                         ng-messages="signupForm.password.$error" role="alert" class="form-errors">
+                        <div class="form-error" ng-message="required">
+                            You need to enter your password
+                        </div>
+
+                        <div class="form-error" ng-message="minlength">
+                            Your password needs to have a minimum of 8 characters
+                        </div>
+                    </div>
+
+                    <div class="col-50 col-offset-25">
+                        <button class="button button-block button-energized" ng-disabled="signupForm.$invalid">
+                            Sign up
+                        </button>
+                    </div>
+
+                    <div class="text-center">
+                        <a class="dark" ui-sref="login">I already have an account</a><br><br>
+                        <p>By signing up you are agreeing to our <span class="positive" ng-click="openModal()">Terms And Conditions</span></p>
+                    </div>
+                </form>
+            </div>
+        </ion-slide-box>
+
+    </ion-content>
 </ion-view>

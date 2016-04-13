@@ -1,0 +1,30 @@
+﻿<ion-view hide-nav-bar="true">
+    <div class="welcome-slider" style="padding: 1em;">
+        <div class="onboarding-title">Darasa</div>
+
+        <div class="list">
+            <form name="uniForm">
+                <ion-input class="item item-input input-item1">
+                    <input type="number" placeholder="Year e.g. 1st Year" ng-model="institution.year">
+                </ion-input>
+
+                <ion-input class="item item-input input-item1">
+                    <input type="number" placeholder="Semester" ng-model="institution.semester">
+                </ion-input>
+
+                <ion-input class="item item-input input-item1">
+                    <input type="text" placeholder="Campus e.g. Main Campus" name="campus" ng-model="institution.campus">
+                </ion-input>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="welcome-container">
+                <button class="button signup-button" ng-click="finishUni()">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+</ion-view>

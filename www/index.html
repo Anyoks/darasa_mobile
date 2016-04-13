@@ -1,24 +1,24 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
     <title></title>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
 
     <!-- weinre debugging -->
     <!-- <script src="http://192.168.43.108:8080/target/target-script-min.js#anonymous"></script> -->
 
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script>
+
+    <script src="lib/sharer.js/sharer.js"></script>
+    <script src="js/angular-messages.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="lib/ngCordova/dist/ng-cordova.js"></script>
@@ -31,101 +31,119 @@
     <script src="js/services.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/controllers.js"></script>
-  </head>
+</head>
 
-  <body ng-app="starter">
+<body ng-app="starter">
     <ion-nav-view></ion-nav-view>
 
     <script id="purchase.html" type="text/ng-template">
-    <div class="modal">
-      <ion-header-bar class="bar bar-header bar-energized">
-        <h1 class="title">Purchase</h1>
-      </ion-header-bar>
-      <ion-content>
-      <div class="card">
-        <div class="item item-divider text-center item-text-wrap">
-          <b>Purchase <span ng-bind="topicName"></span></b>
-        </div>
-        <div class="item item-text-wrap">
-          <ol>
-            <li>1. Go to Safaricom menu on your phone.</li>
-            <li>2. Go to Lipa na Mpesa.</li>
-            <li>3. Select Buy Goods and Services.</li>
-            <li>4. Enter 184274 as the till number.</li>
-            <li>5. Enter Amount.</li>
-            <li>6. Complete the transaction.</li>
-            <li>7. Enter the Mpesa transaction code below.</li>
-          </ol>
-        </div>
-      </div>
-      <form name="confirmPaymentForm" ng-submit="confirmPayment(mpesaCode)">
-        <div class="list">
-            <label class="item item-input item-floating-label">
-              <span class="input-label">Mpesa code</span>
-              <input type="text" placeholder="Mpesa code" name="mpesaCode" ng-model="mpesaCode" required>
-            </label>
-        </div>
-        <div class="text-center">
-          <button
-            type="button"
-            ng-click="closeModal()"
-            class="button button-stable button-balanced button-outline"
-            ion-track-tap="CancelOnPayment"
-            ion-track-data="{ topicName: topicName}">
-              Cancel
-          </button>
-          <button
-              type="submit"
-              ng-disabled="confirmPaymentForm.$invalid"
-              class="button button-balanced"
-              ion-track-tap="ConfirmPaymentClick"
-              ion-track-data="{ topicName: topicName}" >
-            Confirm payment
-          </button>
-        </div>
-      </form>
-      </ion-content>
-    </div>
-  </script>
+        <div class="modal">
+            <ion-header-bar class="bar bar-header bar-energized">
+                <h1 class="title">Purchase</h1>
+                
+                <button class="button button-light button-outline" ng-click="reportIssue()" style="border-color: #FFF; color: #FFF;">Report Issue</button>
+            </ion-header-bar>
 
-  <script id="terms.html" type="text/ng-template">
-  <div class="modal">
-    <div class="bar bar-header bar-energized">
-      <div class="h1 title">Terms and Conditions</div>
-      <button ng-click="closeModal()" class="button button-icon icon ion-close-circled" ion-track-tap="CancelPay"></button>
-    </div>
-    <ion-content class="padding">
-       <div ng-bind-html="terms"></div>
-    </ion-content>
-  </div>
-</script>
+            <ion-content>
+                <div class="card">
+                    <div class="item item-divider text-center item-text-wrap">
+                        <b>Purchase <span ng-bind="topicName"></span></b>
+                    </div>
+                    <div class="item item-text-wrap">
+                        <ol>
+                            <li>1. Make sure you're connected to the internet.</li>
+                            <li>2. Go to Safaricom menu on your phone.</li>
+                            <li>3. Go to Lipa na Mpesa.</li>
+                            <li>4. Select Buy Goods and Services.</li>
+                            <li>5. Enter 184274 as the till number.</li>
+                            <li>6. Enter Amount.</li>
+                            <li>7. Complete the transaction.</li>
+                            <li>8. Enter the Mpesa transaction code below.</li>
+                        </ol>
+                    </div>
+                </div>
+                <form name="confirmPaymentForm" ng-submit="confirmPayment(mpesaCode)">
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <span class="input-label">Mpesa code</span>
+                            <input type="text" placeholder="Mpesa code" name="mpesaCode" ng-model="mpesaCode" required ng-minlength="8" style="text-transform:uppercase">
+                        </label>
+                        <div ng-if="confirmPaymentForm.mpesaCode.$pristine == false"
+                             ng-messages="confirmPaymentForm.mpesaCode.$error" role="alert" class="form-errors">
+                            <div class="form-error" ng-message="required">
+                                You need to enter the Mpesa code
+                            </div>
 
+                            <div class="form-error" ng-message="minlength">
+                                The Mpesa code needs to have a minimum of 8 characters
+                            </div>
+                        </div>
+                        
+                        <label class="item item-input item-floating-label">
+                            <span class="input-label">Lecturer Name</span>
+                            <input type="text" placeholder="Lecturer Name" name="lecturername" ng-model="lecturername">
+                        </label>
+                    </div>
+                    <div class="text-center">
+                        <button type="button"
+                                ng-click="closeModal()"
+                                class="button button-stable button-balanced button-outline"
+                                ion-track-tap="CancelOnPayment"
+                                ion-track-data="{ topicName: topicName}">
+                            Cancel
+                        </button>
+                        <button type="submit"
+                                ng-disabled="confirmPaymentForm.$invalid"
+                                class="button button-balanced"
+                                ion-track-tap="ConfirmPaymentClick"
+                                ion-track-data="{ topicName: topicName}">
+                            Confirm payment
+                        </button>
+                    </div>
+                </form>
+            </ion-content>
+        </div>
+    </script>
 
-<script id="my-popover.html" type="text/ng-template">
-  <ion-popover-view>
-    <ion-content>
-    <div class="list">
-      <div class="item item-avatar">
-        <img ng-src="{{picture}}">
-        <span ng-bind="firstName | capitalize"></span> <span ng-bind="lastName | capitalize"></span><br>
-        Units Owned : <span ng-bind="ownedTopics"> </span>
-      </div>
-      <div class="item item-icon-left" ng-click="shareOnWhatsapp()" href="">
-        <i class="icon ion-social-whatsapp"></i>
-        Share on Whatsapp
-      </div>
-      <div class="item item-icon-left" ng-click="submitFeedback()" href="">
-        <i class="icon ion-chatboxes"></i>
-        Send feedback
-      </div>
-      <div class="item item-icon-left" ng-click="logout()" href="">
-        <i class="icon ion-android-lock"></i>
-        Logout
-      </div>
-    </div>
-    </ion-content>
-  </ion-popover-view>
-</script>
+    <script id="terms.html" type="text/ng-template">
+        <div class="modal">
+            <div class="bar bar-header bar-energized">
+                <div class="h1 title">Terms and Conditions</div>
+                <button ng-click="closeModal()" class="button button-icon icon ion-close-circled" ion-track-tap="CancelPay"></button>
+            </div>
+            <ion-content class="padding">
+                <div ng-bind-html="terms"></div>
+            </ion-content>
+        </div>
+    </script>
+
+    <script id="my-popover.html" type="text/ng-template">
+        <ion-popover-view>
+            <ion-content>
+                <div class="list">
+                    <div class="item item-avatar">
+                        <img ng-src="{{picture}}">
+                        <span ng-bind="firstName | capitalize"></span> <span ng-bind="lastName | capitalize"></span><br>
+                        Units Owned : <span ng-bind="ownedTopics"> </span>
+                    </div>
+                    <div class="item item-icon-left" ng-click="shareOnWhatsapp()" href="">
+                        <i class="icon ion-social-whatsapp"></i>
+                        Share on Whatsapp
+                    </div>
+
+                    <div class="item item-icon-left" ng-click="submitFeedback()" data-sharer="email" data-title="Hi Team Darasa" data-url="" data-subject="User Feedback" data-to="dennorina@gmail.com">
+                        <i class="icon ion-chatboxes"></i>
+                        Send feedback
+                    </div>
+
+                    <div class="item item-icon-left" ng-click="logout()" href="">
+                        <i class="icon ion-android-lock"></i>
+                        Logout
+                    </div>
+                </div>
+            </ion-content>
+        </ion-popover-view>
+    </script>
 
 </body>
 </html>

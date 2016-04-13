@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="ke.co.darasa.app" version="0.0.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<widget id="com.darasa.app" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" android-versionCode="102">
   <name>Darasa</name>
   <description>
         Revision Application
@@ -7,39 +7,53 @@
   <author email="emaganjo@gmail.com" href="http://darasa.co.ke/">
       Awesome Nairobi
     </author>
-  <content src="index.html"/>
-  <access origin="*"/>
-  <preference name="webviewbounce" value="false"/>
+  <content src="index.html" />
+  <access origin="*" />
+  <allow-navigation href="*" />
+  <preference name="webviewbounce" value="false" />
   <preference name="AutoHideSplashScreen" value="false" />
-  <preference name="UIWebViewBounce" value="false"/>
-  <preference name="DisallowOverscroll" value="true"/>
-  <preference name="android-minSdkVersion" value="16"/>
-  <preference name="BackupWebStorage" value="none"/>
-  <preference name="SplashScreen" value="screen"/>
-  <preference name="SplashScreenDelay" value="3000"/>
+  <preference name="UIWebViewBounce" value="false" />
+  <preference name="DisallowOverscroll" value="true" />
+  <preference name="android-minSdkVersion" value="15" />
+  <preference name="BackupWebStorage" value="none" />
+  <preference name="SplashScreen" value="screen" />
+  <preference name="SplashScreenDelay" value="3000" />
+  <preference name="intercom-app-id" value="ahd0euu5" />
+  <preference name="intercom-ios-api-key" value="ios_sdk-5d99e43f22952face0cd60cc9d02413480086ef6" />
+  <preference name="intercom-android-api-key" value="android_sdk-f0209621558fd1f65c12e4488cd5f6e0040c260f" />
   <feature name="StatusBar">
-    <param name="ios-package" value="CDVStatusBar" onload="true"/>
+    <param name="ios-package" value="CDVStatusBar" onload="true" />
   </feature>
   <platform name="android">
-    <icon src="resources/android/icon/dr
-      awable-ldpi-icon.png" density="ldpi"/>
-    <icon src="resources/android/icon/drawable-mdpi-icon.png" density="mdpi"/>
-    <icon src="resources/android/icon/drawable-hdpi-icon.png" density="hdpi"/>
-    <icon src="resources/android/icon/drawable-xhdpi-icon.png" density="xhdpi"/>
-    <icon src="resources/android/icon/drawable-xxhdpi-icon.png" density="xxhdpi"/>
-    <icon src="resources/android/icon/drawable-xxxhdpi-icon.png" density="xxxhdpi"/>
-    <splash src="resources/android/splash/drawable-land-ldpi-screen.png" density="land-ldpi"/>
-    <splash src="resources/android/splash/drawable-land-mdpi-screen.png" density="land-mdpi"/>
-    <splash src="resources/android/splash/drawable-land-hdpi-screen.png" density="land-hdpi"/>
-    <splash src="resources/android/splash/drawable-land-xhdpi-screen.png" density="land-xhdpi"/>
-    <splash src="resources/android/splash/drawable-land-xxhdpi-screen.png" density="land-xxhdpi"/>
-    <splash src="resources/android/splash/drawable-land-xxxhdpi-screen.png" density="land-xxxhdpi"/>
-    <splash src="resources/android/splash/drawable-port-ldpi-screen.png" density="port-ldpi"/>
-    <splash src="resources/android/splash/drawable-port-mdpi-screen.png" density="port-mdpi"/>
-    <splash src="resources/android/splash/drawable-port-hdpi-screen.png" density="port-hdpi"/>
-    <splash src="resources/android/splash/drawable-port-xhdpi-screen.png" density="port-xhdpi"/>
-    <splash src="resources/android/splash/drawable-port-xxhdpi-screen.png" density="port-xxhdpi"/>
-    <splash src="resources/android/splash/drawable-port-xxxhdpi-screen.png" density="port-xxxhdpi"/>
+    <icon src="resources/android/icon/dr       awable-ldpi-icon.png" density="ldpi" />
+    <icon src="resources/android/icon/drawable-mdpi-icon.png" density="mdpi" />
+    <icon src="resources/android/icon/drawable-hdpi-icon.png" density="hdpi" />
+    <icon src="resources/android/icon/drawable-xhdpi-icon.png" density="xhdpi" />
+    <icon src="resources/android/icon/drawable-xxhdpi-icon.png" density="xxhdpi" />
+    <icon src="resources/android/icon/drawable-xxxhdpi-icon.png" density="xxxhdpi" />
+    <splash src="resources/android/splash/drawable-land-ldpi-screen.png" density="land-ldpi" />
+    <splash src="resources/android/splash/drawable-land-mdpi-screen.png" density="land-mdpi" />
+    <splash src="resources/android/splash/drawable-land-hdpi-screen.png" density="land-hdpi" />
+    <splash src="resources/android/splash/drawable-land-xhdpi-screen.png" density="land-xhdpi" />
+    <splash src="resources/android/splash/drawable-land-xxhdpi-screen.png" density="land-xxhdpi" />
+    <splash src="resources/android/splash/drawable-land-xxxhdpi-screen.png" density="land-xxxhdpi" />
+    <splash src="resources/android/splash/drawable-port-ldpi-screen.png" density="port-ldpi" />
+    <splash src="resources/android/splash/drawable-port-mdpi-screen.png" density="port-mdpi" />
+    <splash src="resources/android/splash/drawable-port-hdpi-screen.png" density="port-hdpi" />
+    <splash src="resources/android/splash/drawable-port-xhdpi-screen.png" density="port-xhdpi" />
+    <splash src="resources/android/splash/drawable-port-xxhdpi-screen.png" density="port-xxhdpi" />
+    <splash src="resources/android/splash/drawable-port-xxxhdpi-screen.png" density="port-xxxhdpi" />
   </platform>
-  <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
+  <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
+  <plugin name="cordova-plugin-console" version="1.0.2" />
+  <plugin name="cordova-plugin-device" version="1.1.1" />
+  <plugin name="cordova-plugin-google-analytics" version="0.8.1" />
+  <plugin name="cordova-plugin-googleplus" version="4.0.8" />
+  <plugin name="cordova-plugin-splashscreen" version="3.1.0" />
+  <plugin name="cordova-plugin-statusbar" version="2.1.2" />
+  <plugin name="cordova-plugin-whitelist" version="1.2.1" />
+  <plugin name="cordova-plugin-x-socialsharing" version="5.0.11" />
+  <plugin name="ionic-plugin-keyboard" version="1.0.8" />
+  <plugin name="cordova-plugin-intercom" version="1.1.3" />
+  <plugin name="cordova-plugin-x-toast" version="2.5.0" />
 </widget>

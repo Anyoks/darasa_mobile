@@ -1,9 +1,9 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*!
  * Copyright 2015 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.2.4
+ * Ionic, v1.2.4-nightly-1917
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -3970,9 +3970,9 @@ a.subdued {
     .bar.bar-balanced.bar-footer {
       background-image: linear-gradient(180deg, #28a54c, #0c60ee 50%, transparent 50%); }
   .bar.bar-energized {
-    border-color: #e6b500;
-    background-color: #ffc900;
-    background-image: linear-gradient(0deg, #e6b500, #e6b500 50%, transparent 50%);
+    border-color: #FF9900;
+    background-color: #FF9900;
+    background-image: linear-gradient(0deg, #FF9900, #FF9900 50%, transparent 50%);
     color: #fff; }
     .bar.bar-energized .title {
       color: #fff; }
@@ -8718,27 +8718,27 @@ progress {
         color: #fff; }
   .button.button-energized {
     border-color: transparent;
-    background-color: #ffc900;
+    background-color: #FF9900;
     color: #fff; }
     .button.button-energized:hover {
       color: #fff;
       text-decoration: none; }
     .button.button-energized.active, .button.button-energized.activated {
-      background-color: #e6b500; }
+      background-color: #FF9900; }
     .button.button-energized.button-clear {
       border-color: transparent;
       background: none;
       box-shadow: none;
-      color: #ffc900; }
+      color: #FF9900; }
     .button.button-energized.button-icon {
       border-color: transparent;
       background: none; }
     .button.button-energized.button-outline {
-      border-color: #ffc900;
+      border-color: #FF9900;
       background: transparent;
       color: #ffc900; }
       .button.button-energized.button-outline.active, .button.button-energized.button-outline.activated {
-        background-color: #ffc900;
+        background-color: #FF9900;
         box-shadow: none;
         color: #fff; }
   .button.button-royal {

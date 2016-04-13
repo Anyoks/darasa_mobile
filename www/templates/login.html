@@ -1,31 +1,52 @@
 <ion-view title="Login">
-  <ion-header-bar class="bar-energized">
-      <h1 class="title">Login</h1>
+    <ion-header-bar class="bar-energized">
+        <h1 class="title">Login</h1>
     </ion-header-bar>
     <ion-content>
-    <div class="list list-inset">
-    <form name="loginForm" ng-submit="login(user)">
-        <label class="item item-input">
-          <input type="email" placeholder="Email" name="email" ng-model="user.email" required>
-        </label>
-        <label class="item item-input">
-          <input type="password" placeholder="Password" name="password" ng-model="user.password" required>
-        </label>
-        <button
-          type="submit"
-          ng-disabled="loginForm.$invalid"
-          class="button button-block button-energized">
-          Login
-        </button>
-    </form>
+        <div class="list">
+            <form name="loginForm" ng-submit="login(user)" novalidate>
+                <ion-input class="item item-input input-item">
+                    <input type="email" placeholder="Email" name="email" ng-model="user.email" required>
+                </ion-input>
+                <div ng-if="loginForm.email.$pristine == false"
+                     ng-messages="loginForm.email.$error" role="alert" class="form-errors">
+                    <div class="form-error" ng-message="required">
+                        You need to enter your email address
+                    </div>
 
-    <button ng-show="isAvailable" class="button button-block button-assertive icon ion-social-google" ng-click="loginInWithGoogle()" ng-cloak>
-      Login with Google
-    </button>
+                    <div class="form-error" ng-message="email">Your email address is invalid</div>
+                </div>
 
-      <div class="text-center">
-        <a class="dark" ui-sref="signup">I don't have an account</a>
-      </div>
-    </div>
-  </ion-content>
+                <ion-input  class="item item-input input-item">
+                    <input type="password" placeholder="Password" name="password" ng-model="user.password" required ng-minlength="8">
+                </ion-input>
+                <div ng-if="loginForm.password.$pristine == false"
+                     ng-messages="loginForm.password.$error" role="alert" class="form-errors">
+                    <div class="form-error" ng-message="required">
+                        You need to enter your password
+                    </div>
+
+                    <div class="form-error" ng-message="minlength">
+                        Your password needs to have a minimum of 8 characters
+                    </div>
+                </div>
+
+                <div class="col-50 col-offset-25">
+                    <button type="submit"
+                            ng-disabled="loginForm.$invalid"
+                            class="button button-block button-energized">
+                        Login
+                    </button>
+                </div>
+            </form>
+
+            <!--<button ng-show="isAvailable" class="button button-block button-assertive icon ion-social-google" ng-click="loginInWithGoogle()" ng-cloak>
+                Login with Google
+            </button>-->
+
+            <div class="text-center">
+                <a class="dark" ui-sref="signup">I don't have an account</a>
+            </div>
+        </div>
+    </ion-content>
 </ion-view>

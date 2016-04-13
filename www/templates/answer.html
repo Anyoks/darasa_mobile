@@ -3,26 +3,29 @@
     <button class="button button-icon icon ion-android-more-vertical" ng-click="openPopover($event)"></button>
   </ion-nav-buttons>
   <ion-content view-title="Answer">
-    <ion-refresher
-      pulling-text="Pull to refresh..."
-      on-refresh="doRefresh()">
-    </ion-refresher>
-    <ion-list ng-show="answer">
-      <ion-item class="item item-divider text-center">
-          <b class="energized">Question</b>
-      </ion-item>
-      <ion-item class="item-text-wrap">
-          <p ng-bind-html="question | unsafe"></p>
-      </ion-item>
-      <ion-item class="item item-divider text-center">
-          <b class="energized">Answer</b>
-      </ion-item>
-      <ion-item class="item-text-wrap">
-        <div ng-bind-html="answer | unsafe"></div>
-      </ion-item>
-    </ion-list>
-    <div class="padding text-center" ng-hide="answer" ng-cloak>
-      <h3><span class="icon ion-refresh"></span> Pull to refresh</h3>
-    </div>
-  </ion-content>
+      <ion-refresher
+          pulling-text="Pull to refresh..."
+          on-refresh="doRefresh()">
+      </ion-refresher>
+
+      <ion-scroll direction="xy" scrollbar-y="false" scrollbar-x="false">
+          <ion-list ng-show="answer">
+              <ion-item class="item item-divider text-center">
+                  <b class="energized">Question</b>
+              </ion-item>
+              <ion-item class="item-text-wrap">
+                  <p ng-bind-html="question | unsafe"></p>
+              </ion-item>
+              <ion-item class="item item-divider text-center">
+                  <b class="energized">Answer</b>
+              </ion-item>
+              <ion-item class="item-text-wrap">
+                  <div ng-bind-html="answer | unsafe"></div>
+              </ion-item>
+          </ion-list>
+      </ion-scroll>
+          <div class="padding text-center" ng-hide="answer" ng-cloak>
+              <h3><span class="icon ion-refresh"></span> Pull to refresh</h3>
+          </div>
+</ion-content>
 </ion-view>

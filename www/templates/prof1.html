@@ -1,0 +1,42 @@
+﻿<ion-view hide-nav-bar="true">
+    <div class="welcome-slider" style="padding: 1em;">
+        <div class="onboarding-title">Darasa</div>
+
+        <div class="onboarding-explanation">
+            What institution are you in?
+        </div>
+
+        <div>
+            <label class="item item-input item-select input-item1">
+                <div class="input-label" style="color: #FFF">
+                    Institution Name
+                </div>
+
+                <select ng-model="selectedInstitution">
+                    <option ng-repeat="institution in institutions" value="{{institution.id}}">{{institution.text}}</option>
+                </select>
+            </label>
+        </div>
+        <!--<div class="onboarding-explanation">
+            Which level of study are you in?
+        </div>
+
+        <button class="button button-light button-block" ng-click="profGoToNext()">
+            <span>YES</span>
+        </button>
+
+        <button class="button button-light button-block" ng-click="profGoToNext3()">
+            <span>NO</span>
+        </button>-->
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="welcome-container">
+                <button class="button button-outline login-button" ng-click="finish()">
+                    Finish
+                </button>
+            </div>
+        </div>
+    </div>
+</ion-view>

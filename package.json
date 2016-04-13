@@ -21,7 +21,9 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    "cordova-plugin-googleplus",
+    "cordova-plugin-x-socialsharing"
   ],
   "cordovaPlatforms": [
     "android"

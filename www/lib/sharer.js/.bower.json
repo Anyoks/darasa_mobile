@@ -1,0 +1,48 @@
+{
+  "name": "sharer.js",
+  "homepage": "http://ellisonleao.github.io/sharer.js/",
+  "authors": [
+    "Ellison Leão <ellisonleao@gmail.com>"
+  ],
+  "description": "Create custom social share DOM elements. No dependencies.",
+  "main": "sharer.js",
+  "keywords": [
+    "social",
+    "share",
+    "facebook",
+    "twitter",
+    "google",
+    "plus",
+    "linkedin",
+    "email",
+    "telegram",
+    "whatsapp",
+    "telegram",
+    "viber",
+    "hackernews",
+    "vk",
+    "reddit",
+    "instapaper",
+    "pocket",
+    "stumbleupon",
+    "digg",
+    "flipboard"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "version": "0.2.11",
+  "_release": "0.2.11",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.11",
+    "commit": "6fbd6f794f91dfb26d2caf351742d730cbb01e45"
+  },
+  "_source": "git://github.com/ellisonleao/sharer.js.git",
+  "_target": "~0.2.11",
+  "_originalSource": "sharerjs",
+  "_direct": true
+}

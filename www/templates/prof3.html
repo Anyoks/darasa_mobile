@@ -1,0 +1,26 @@
+﻿<ion-view hide-nav-bar="true">
+    <div class="welcome-slider" style="padding: 1em;">
+        <div class="onboarding-title">Darasa</div>
+
+        <div class="list">
+            <form name="uniForm" novalidate>
+                <ion-input class="item item-input input-item1">
+                    <input type="text" placeholder="Level e.g. Section 1" ng-model="institution.level" required>
+                </ion-input>
+
+                <ion-input class="item item-input input-item1">
+                    <input type="text" placeholder="Campus e.g. Town" ng-model="institution.campus" required>
+                </ion-input>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="welcome-container">
+                <button class="button signup-button" ng-click="finishProfessional()">
+                    Finish
+                </button>
+            </div>
+        </div>
+    </div>
+</ion-view>
