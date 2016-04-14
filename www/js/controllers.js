@@ -1,18 +1,24 @@
 angular.module('starter.controllers', ['ngMessages'])
 
 .controller('AppCtrl', function ($scope, $rootScope, $state, $cordovaEmailComposer, $localstorage, $ionicLoading, $ionicPopover, $cordovaSocialSharing, Analytics, Darasa, NotificationService, $ionicPlatform) {
-    $scope.firstName = $rootScope.globals.user.firstName;
-    $scope.lastName = $rootScope.globals.user.secondName;
-    $scope.email = $rootScope.globals.user.email;
-    $scope.userId = $rootScope.globals.user.userId;
-    $scope.token = $rootScope.globals.user.token;
+    $scope.$on('$ionicView.enter', function () {
+        console.log('here');
 
-    Darasa.GetOwnedTopics($scope.token).then(function (data) {
-        $scope.ownedTopics = data.data.data.length;
+        var currentUser = $localstorage.getObject('user');
+    
+        $scope.firstName = currentUser.firstName;
+        $scope.lastName = currentUser.secondName;
+        $scope.email = currentUser.email;
+        $scope.userId = currentUser.userId;
+        $scope.token = currentUser.token;
+
+        Darasa.GetOwnedTopics($scope.token).then(function (data) {
+            $scope.ownedTopics = data.data.data.length;
+        });
+
+        $scope.picture = $rootScope.globals.user.picture || 'img/avatar.jpg';
+        Analytics._setUserId($scope.token);
     });
-
-    $scope.picture = $rootScope.globals.user.picture || 'img/avatar.jpg';
-    Analytics._setUserId($scope.token);
 
     //popover control
     $ionicPopover.fromTemplateUrl('my-popover.html', {
@@ -198,6 +204,7 @@ angular.module('starter.controllers', ['ngMessages'])
                 user.secondName = data.data.second_name;
                 user.email = data.data.email;
                 user.picture = undefined;
+                user.password = '';
                 $localstorage.setObject('user', user);
                 $rootScope.globals.user = user;
                 Analytics._trackEvent('Users', 'Log in', 'Login with email');
@@ -275,11 +282,13 @@ angular.module('starter.controllers', ['ngMessages'])
     }
 })
 
-.controller('UnitsCtrl', function ($scope, $state, Darasa, Analytics) {
+.controller('UnitsCtrl', function ($scope, $state, Darasa, Analytics, $localstorage) {
     $scope.$on('$ionicView.enter', function () {
         Analytics._trackView('Units page');
 
-        Darasa.GetUnits($scope.token).then(function (data) {
+        var currentUser = $localstorage.getObject('user');
+
+        Darasa.GetUnits(currentUser.token).then(function (data) {
             $scope.units = data.data.data;
         });
     });
@@ -374,7 +383,7 @@ angular.module('starter.controllers', ['ngMessages'])
 
         Darasa.GetOwnedTopics($scope.token).then(function (data) {
             if (data.data.data) {
-                data.data.data.forEach(function(ownedTopic) {
+                data.data.data.forEach(function (ownedTopic) {
                     if (ownedTopic.id === $stateParams.topicId) {
                         $scope.ownsTopic = true;
                     }
@@ -389,11 +398,11 @@ angular.module('starter.controllers', ['ngMessages'])
                 });
             }
             console.log(data);
-            
+
         });
     });
 
-    $scope.loadMore = function() {
+    $scope.loadMore = function () {
         //if (loading) {
         //    return;
         //}
@@ -407,7 +416,7 @@ angular.module('starter.controllers', ['ngMessages'])
             if (!data.data.data.length) {
                 $scope.isLastPage = true;
             }
-            
+
             $scope.$broadcast('scroll.infiniteScrollComplete');
 
             loading = false;
@@ -613,12 +622,12 @@ angular.module('starter.controllers', ['ngMessages'])
         }
 
         Institutions.addToUserProfile(details).then(function () {
-        }, function() {
+        }, function () {
             $cordovaToast
                 .show("Couldn't update your data", 'long', 'bottom')
-                .then(function(success) {
+                .then(function (success) {
                     // success
-                }, function(error) {
+                }, function (error) {
                     // error
                 });
         });

@@ -42,6 +42,7 @@ angular.module('starter.services', [])
                 .then(function (data) {
                     return data;
                 }, function (error) {
+                    console.log(error);
                     console.log(error.data);
                     NotificationService.showPopup('Oops', error.data.error);
                 });
